@@ -1,0 +1,27 @@
+/* TODO: add 7x6 board */
+#board {
+	/* removes gap between rows */
+	font-size: 0;		
+	height:500px;
+	clear:both;
+	width:600px;
+	margin: 0 auto;
+	position:relative;
+}
+
+.imgWrapper {
+	position: relative;
+	display: inline-block;
+}
+
+/* overlays orbs onto board */
+.orbs {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#controls{
+	padding-top: 20px;
+	text-align: center;
+}
