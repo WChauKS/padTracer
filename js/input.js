@@ -55,7 +55,7 @@ function checkForSubmit(){
         $("#inputSubmit").attr("disabled", true);
         // console.log("submit=f");
     }else{
-        inputStr=inputData[0];
+        inputStr=inputData[1];
         for(i=0; i<NUM_ORBS_1; i++){
             if(inputStr[i]=="R"||inputStr[i]=="B"||inputStr[i]=="G"||inputStr[i]=="Y"||inputStr[i]=="P"||inputStr[i]=="H"){
                 $("#inputSubmit").attr("disabled", false);
@@ -80,7 +80,7 @@ function insertInputFields(){
     var position=0;
     for(i=1; i<numInputBox; i++){
         for(j=position; j<(position+numInputBox); j++){
-            insertStr+=convertOrbToText(Board.orbs[j]);
+            insertStr+=convertOrbToText(Board[POS[j]].orb);
         }
         $(tmp+i).val(insertStr);
         insertStr="";
@@ -103,7 +103,7 @@ function inputSubmit(){
             case KEY.p: tmp=ORBS.purple; break;//P
             case KEY.y: tmp=ORBS.yellow; break;//Y
         }
-        Board.orbs[i]=tmp;
+        Board[POS[i]].orb=tmp;
         changeOrbs(i, tmp);
     }
     console.log("Input accepted\n\tBoard Changed");

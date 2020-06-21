@@ -20,7 +20,7 @@ function randomize(){
     for(i=0; i<NUM_ORBS_1; i++){
         randOrb = Math.floor(Math.random() * (Object.keys(ORBS).length - 1)) + 1;
         // console.log(randOrb);
-        Board.orbs[i]=randOrb;
+        Board[POS[i]].orb=randOrb;
         changeOrbs(i, randOrb);
     }
     console.log("Board Randomized");
@@ -29,13 +29,13 @@ function randomize(){
 function clearBoard(){
     var tmp;
     for(i=0; i<NUM_ORBS_1; i++){
-        Board.orbs[i]=ORBS.blank;
+        Board[POS[i]].orb=ORBS.blank;
         tmp="#orb" + String(i);
         $(tmp).attr("src", "img/blank.png");
         // console.log(tmp);
     }
     console.log("Board Cleared");
-    // console.log(Board.orbs[10]);
+    // console.log(Board[POS[i]].orb);
 }
 
 // function update(){
