@@ -1,4 +1,4 @@
-// handles input verification, format, submission, and clearing of fields
+// handles input verification, format, submission, clearing and inserting for fields
 
 function verifyInput(){
     var e = event || window.event;
@@ -21,7 +21,19 @@ function verifyInput(){
     }
 }
 
-function getInputFields(x){
+function convertOrbToText(x){
+    switch(x){
+        case 1: return "R"; break;
+        case 2: return "B"; break;
+        case 3: return "G"; break;
+        case 4: return "Y"; break;
+        case 5: return "P"; break;
+        case 6: return "H"; break;
+    }
+}
+
+function getInputFields(){
+    var inputData=[];
     var numInputBox=$(".inputBox").length;
     var inputStr="";
     var tmp="#input";
@@ -30,20 +42,25 @@ function getInputFields(x){
     }
     // console.log(inputStr.length);
     inputLength=inputStr.length;
-    switch(x){
-        case 1: return inputLength; break;
-        case 2: return inputStr.toUpperCase(); break;
-    }
+    inputData.push(inputLength);
+    inputData.push(inputStr.toLocaleUpperCase());
+    return inputData;
 }
 
 function checkForSubmit(){
-    var inputLength=getInputFields(1);
-    console.log(inputLength);
+    var inputData=getInputFields();
+    var inputLength=inputData[0];
+    // console.log(inputLength);
     if(inputLength!=30){
         $("#inputSubmit").attr("disabled", true);
         // console.log("submit=f");
     }else{
-        $("#inputSubmit").attr("disabled", false);
+        inputStr=inputData[0];
+        for(i=0; i<NUM_ORBS_1; i++){
+            if(inputStr[i]=="R"||inputStr[i]=="B"||inputStr[i]=="G"||inputStr[i]=="Y"||inputStr[i]=="P"||inputStr[i]=="H"){
+                $("#inputSubmit").attr("disabled", false);
+            }
+        }
         // console.log("submit=t");
     }
 }
@@ -56,8 +73,24 @@ function clearInputFields(){
     }
 }
 
+function insertInputFields(){
+    var numInputBox=$(".inputBox").length+1;
+    var tmp="#input";
+    var insertStr="";
+    var position=0;
+    for(i=1; i<numInputBox; i++){
+        for(j=position; j<(position+numInputBox); j++){
+            insertStr+=convertOrbToText(Board.orbs[j]);
+        }
+        $(tmp+i).val(insertStr);
+        insertStr="";
+        position+=numInputBox;
+    }
+}
+
 function inputSubmit(){
-    var input = getInputFields(2);
+    var inputData = getInputFields();
+    var input=inputData[1];
     console.log(input);
     var tmp;
     for(i=0; i<NUM_ORBS_1; i++){
@@ -98,4 +131,9 @@ $(".inputBox")
 $("#clear")
     .on("click", function(){
         clearInputFields();
+    });
+
+$("#randomize")
+    .on("click", function(){
+        insertInputFields();
     });
