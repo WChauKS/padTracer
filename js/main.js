@@ -3,37 +3,26 @@ $(function(){
     console.log("Main loaded");
 });
 
+function changeOrbs(index, newOrb){
+    var tmp="#orb" + String(index);
+    switch(newOrb){
+        case ORBS.red: $(tmp).attr("src", "img/red.png"); break;
+        case ORBS.blue: $(tmp).attr("src", "img/blue.png"); break;
+        case ORBS.green: $(tmp).attr("src", "img/green.png"); break;
+        case ORBS. yellow: $(tmp).attr("src", "img/yellow.png"); break;
+        case ORBS.purple: $(tmp).attr("src", "img/purple.png"); break;
+        case ORBS.heart: $(tmp).attr("src", "img/heart.png"); break;
+    }
+}
+
 function randomize(){
-    var tmp, randOrb;
+    var randOrb;
     for(i=0; i<NUM_ORBS_1; i++){
         randOrb = Math.floor(Math.random() * (Object.keys(ORBS).length - 1)) + 1;
-        // randOrb = Object.keys(ORBS).length;
         // console.log(randOrb);
         Board.orbs[i]=randOrb;
-        tmp="#orb" + String(i);
-        switch(randOrb){
-            case ORBS.red:
-                $(tmp).attr("src", "img/red.png");
-                break;
-            case ORBS.blue:
-                $(tmp).attr("src", "img/blue.png");
-                break;
-            case ORBS.green:
-                $(tmp).attr("src", "img/green.png");
-                break;
-            case ORBS. yellow:
-                $(tmp).attr("src", "img/yellow.png");
-                break;
-            case ORBS.purple:
-                $(tmp).attr("src", "img/purple.png");
-                break;
-            case ORBS.heart:
-                $(tmp).attr("src", "img/heart.png");
-                break;
-        }
-        console.log(i + ":" + randOrb);
+        changeOrbs(i, randOrb);
     }
-    // console.log(Board.orbs);
     console.log("Board Randomized");
 }
 
