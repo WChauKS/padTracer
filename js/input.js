@@ -1,5 +1,6 @@
 // handles input verification, format, submission, clearing and inserting for fields
 
+// prevents invalid character from being entered into the input fields
 function verifyInput(){
     var e = event || window.event;
     var key = e.keyCode || e.which;
@@ -9,6 +10,7 @@ function verifyInput(){
         case KEY.delete: break;
         case KEY.left: break;
         case KEY.right: break;
+        // case KEY.v: break;
         case KEY.r: break;
         case KEY.b: break;
         case KEY.g: break;
@@ -21,6 +23,7 @@ function verifyInput(){
     }
 }
 
+// convert assigned orb value to char equivalent
 function convertOrbToText(x){
     switch(x){
         case 1: return "R"; break;
@@ -34,10 +37,10 @@ function convertOrbToText(x){
 
 function getInputFields(){
     var inputData=[];
-    var numInputBox=$(".inputBox").length;
+    var numInputField=$(".inputField").length;
     var inputStr="";
     var tmp="#input";
-    for(i=1; i<numInputBox+1; i++){
+    for(i=1; i<numInputField+1; i++){
         inputStr+=$(tmp+i).val();
     }
     // console.log(inputStr.length);
@@ -47,6 +50,8 @@ function getInputFields(){
     return inputData;
 }
 
+// gets data from each field, combines into a string, and counts the number of valid characters
+// if the number of valid characters is correct, submit button will be enabled, else it will stay disabled
 function checkForSubmit(){
     var inputData=getInputFields();
     var inputLength=inputData[0];
@@ -56,42 +61,61 @@ function checkForSubmit(){
         // console.log("submit=f");
     }else{
         inputStr=inputData[1];
+        // console.log(inputStr);
+        var validCheck=0;
         for(i=0; i<NUM_ORBS_1; i++){
             if(inputStr[i]=="R"||inputStr[i]=="B"||inputStr[i]=="G"||inputStr[i]=="Y"||inputStr[i]=="P"||inputStr[i]=="H"){
-                $("#inputSubmit").attr("disabled", false);
+                // $("#inputSubmit").attr("disabled", false);
+                validCheck++;
             }
         }
-        // console.log("submit=t");
+        // console.log(validCheck);
+        if(validCheck==NUM_ORBS_1){
+            $("#inputSubmit").attr("disabled", false);
+            // console.log("submit=t");
+        } else {
+            $("#inputSubmit").attr("disabled", true);
+        }
     }
 }
 
+// clears all of the input fields
+// called when clear is pressed, or anytime each field is expected to be filled by another function
 function clearInputFields(){
-    var numInputBox=$(".inputBox").length;
+    var numInputField=$(".inputField").length;
     var tmp="#input";
-    for(i=1; i<numInputBox+1; i++){
+    for(i=1; i<numInputField+1; i++){
         $(tmp+i).val("");
     }
 }
 
-function insertInputFields(){
-    var numInputBox=$(".inputBox").length+1;
+// a string is passed to this function to insert into the appropriate field
+// if string is not long enough, it will fill up to the correct amount
+// if string is too long, it will only take the appropriate amount
+function insertInputFields(x){
+    var numInputField=$(".inputField").length+1;
     var tmp="#input";
     var insertStr="";
     var position=0;
-    for(i=1; i<numInputBox; i++){
-        for(j=position; j<(position+numInputBox); j++){
-            insertStr+=convertOrbToText(Board[POS[j]].orb);
+    for(i=1; i<numInputField; i++){
+        for(j=position; j<(position+numInputField); j++){
+            if(j<x.length){
+                insertStr+=x[j];
+            } else {
+                insertStr+="";
+            }
         }
         $(tmp+i).val(insertStr);
         insertStr="";
-        position+=numInputBox;
+        position+=numInputField;
     }
 }
 
+// handles updating the saved orbs and updating the board view
 function inputSubmit(){
     var inputData = getInputFields();
     var input=inputData[1];
-    console.log(input);
+    // console.log(input);
     var tmp;
     for(i=0; i<NUM_ORBS_1; i++){
         // console.log(input.charCodeAt(i));
@@ -106,18 +130,18 @@ function inputSubmit(){
         Board[POS[i]].orb=tmp;
         changeOrbs(i, tmp);
     }
-    console.log("Input accepted\n\tBoard Changed");
+    console.log("Input accepted\n\tBoard: " + input);
 }
 
-$(".inputBox")
+$(".inputField")
     //fired when key is released
     //advances to the next input field when current one is filled
     .keyup(function(){
-        var $inputBox=$(this);
-        var numChar=$inputBox.val().length;
-        var maxLength=$inputBox.attr("maxLength");
+        var $inputField=$(this);
+        var numChar=$inputField.val().length;
+        var maxLength=$inputField.attr("maxLength");
         if(numChar==maxLength){
-            $inputBox.next().focus();
+            $inputField.next().focus();
         }
         checkForSubmit();
     })
@@ -125,15 +149,37 @@ $(".inputBox")
     .keydown(function(){
         verifyInput();
         // console.log($("#input1").value);
-        // checkForSubmit();
+    })
+    .bind("paste", function(){
+        checkForSubmit();
     })
 
+// appends on click function to clear button to clear input fields
 $("#clear")
     .on("click", function(){
         clearInputFields();
     });
 
+// appends on click function to fill input fields to correspond to what is in the board view
 $("#randomize")
     .on("click", function(){
-        insertInputFields();
+        var inputStr = "";
+        for(i=0; i<NUM_ORBS_1; i++){
+            inputStr+=convertOrbToText(Board[POS[i]].orb)
+        }
+        console.log("\tBoard: " + inputStr);
+        insertInputFields(inputStr);
+        checkForSubmit();
+    });
+
+// handles pasting into the input fields
+// currently allows for only right click -> paste
+$("#input1")
+    .bind("paste", function(e){
+        var pastedData=e.originalEvent.clipboardData.getData('text');
+        // pasteInputFields(pastedData);
+        console.log("Pasted Data: " + pastedData);
+        clearInputFields();
+        insertInputFields(pastedData);
+        checkForSubmit();
     });
