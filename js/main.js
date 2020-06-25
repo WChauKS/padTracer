@@ -38,15 +38,6 @@ function clearBoard(){
     // console.log(Board[POS[i]].orb);
 }
 
-// function update(){
-//     var tmp;
-//     for(i=0; i<NUM_ORBS_1; i++){
-//         tmp="#orbs" + String(1);
-//         $("tmp").attr("src", "img/water.png");
-//     }
-//     console.log(tmp);
-// }
-
 function init(){
     console.log("init()");
     boardInit();

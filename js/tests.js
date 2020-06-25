@@ -33,7 +33,7 @@ function getTestCase(test){
 }
 
 function inputTest(){
-    // var testCase = parseInt($("#testCase").val());
+    // var testCase=parseInt($("#testCase").val());
     var tmp;
     var testStr=getTestCase(parseInt($("#testCase").val()));
     // console.log(testStr);
@@ -51,5 +51,11 @@ function inputTest(){
         }
         Board[POS[i]].orb=tmp;
         changeOrbs(i, tmp);
+    }
+}
+
+function drop(){
+    for(i=0; i<NUM_ORBS_1; i++){
+        console.log(Board[POS[i]]);
     }
 }
