@@ -1,4 +1,5 @@
 var prevPos=[];
+var origin="";
 
 // gets img source of previous position and current position and swaps them
 function swap(prev, cur){
@@ -29,8 +30,17 @@ $(function(){
         // },
         start: function(e, ui){
             prevPos=[];
-            prevPos.push(e.target.id);
+            origin=e.target.id;
+            prevPos.push(origin);
             // console.log(e);
+        },
+        drag: function(e, ui){
+            if(ui.position.top==0 && ui.position.left==0){
+                if(prevPos[prevPos.length-1]!=origin){
+                    prevPos.push(origin);
+                    swap(prevPos[prevPos.length-2], prevPos[prevPos.length-1]);
+                }
+            }
         },
         stop: function(e, ui){
             console.log(prevPos);
@@ -46,7 +56,7 @@ $(function(){
             // ui is object being dragged
             ui.helper.css('z-index', "30");   // brings clone to front
             prevPos.push(e.target.id);
-            console.log("Hovering:", e.target.id);
+            // console.log("Hovering:", e.target.id);
             swap(prevPos[prevPos.length-2], prevPos[prevPos.length-1]);
         },
     });
