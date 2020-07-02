@@ -28,9 +28,9 @@ function drawBoard(){
     var divStr;
     for(i=0; i<NUM_ORBS_1; i++){
         if(Board[POS[i]].squares==0){
-            divStr="<div class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg1.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/bomb.png\"></div>"
+            divStr="<div id=\"imgWrapper" + i + "\" class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg1.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/bomb.png\"></div>"
         } else {
-            divStr="<div class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg2.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/bomb.png\"></div>"
+            divStr="<div id=\"imgWrapper" + i + "\" class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg2.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/bomb.png\"></div>"
         }
         // console.log(divStr);
         $("#board").append(divStr);
@@ -49,6 +49,6 @@ function boardInit(){
             k++;
         }
     }
-    console.log(Board);
+    // console.log(Board);
     drawBoard();
 }
