@@ -165,7 +165,7 @@ $("#randomize")
     .on("click", function(){
         var inputStr="";
         for(i=0; i<NUM_ORBS_1; i++){
-            inputStr+=convertOrbToText(Board[POS[i]].orb)
+            inputStr+=convertOrbToText(Board[POS[i]].orb);
         }
         console.log("\tBoard: " + inputStr);
         insertInputFields(inputStr);

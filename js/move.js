@@ -1,4 +1,4 @@
-var prevPos=[];
+var dragPath=[];
 var origin="";
 
 // gets img source of previous position and current position and swaps them
@@ -16,6 +16,33 @@ function swap(prev, cur){
     $(curElement).attr("src", prevSrc);
 }
 
+function convertSrc(src){
+    if(src==SRC.blank){return ORBS_ALL.blank};
+    if(src==SRC.red){return ORBS_ALL.red};
+    if(src==SRC.blue){return ORBS_ALL.blue};
+    if(src==SRC.green){return ORBS_ALL.green};
+    if(src==SRC.yellow){return ORBS_ALL.yellow};
+    if(src==SRC.purple){return ORBS_ALL.purple};
+    if(src==SRC.heart){return ORBS_ALL.heart};
+    if(src==SRC.jammer){return ORBS_ALL.jammer};
+    if(src==SRC.poison){return ORBS_ALL.poison};
+    if(src==SRC.mortal){return ORBS_ALL.mortal};
+    if(src==SRC.bomb){return ORBS_ALL.bomb};
+}
+
+function updateBoardAfterMove(){
+    var tmp;
+    boardStr="";
+    for(i=0; i<NUM_ORBS_1; i++){
+        tmp="#orb"+i;
+        Board[POS[i]].orb=convertSrc($(tmp).attr("src"));
+        boardStr+=convertOrbToText(convertSrc($(tmp).attr("src")));
+    }
+    if(boardStr!="000000000000000000000000000000"){
+        console.log("Orbs were dragged\n\tBoard: "+boardStr);
+    }
+}
+
 $(function(){
     $(".orbs").draggable({
         containment: $("#board"),
@@ -25,25 +52,23 @@ $(function(){
         refreshPositions: true,
         grid: [100, 100],
         helper: "clone",
-        // helper: function(e){
-        //     return 
-        // },
         start: function(e, ui){
-            prevPos=[];
+            dragPath=[];
             origin=e.target.id;
-            prevPos.push(origin);
-            // console.log(e);
+            dragPath.push(origin);
         },
         drag: function(e, ui){
             if(ui.position.top==0 && ui.position.left==0){
-                if(prevPos[prevPos.length-1]!=origin){
-                    prevPos.push(origin);
-                    swap(prevPos[prevPos.length-2], prevPos[prevPos.length-1]);
+                if(dragPath[dragPath.length-1]!=origin){
+                    dragPath.push(origin);
+                    swap(dragPath[dragPath.length-2], dragPath[dragPath.length-1]);
                 }
             }
         },
         stop: function(e, ui){
-            console.log(prevPos);
+            updateBoardAfterMove();
+            // drop();
+            // console.log("Path taken: "+dragPath);    //full path of orb drag is saved here
         },
     });
 });
@@ -55,9 +80,9 @@ $(function(){
             // e is the object targeted
             // ui is object being dragged
             ui.helper.css('z-index', "30");   // brings clone to front
-            prevPos.push(e.target.id);
+            dragPath.push(e.target.id);
             // console.log("Hovering:", e.target.id);
-            swap(prevPos[prevPos.length-2], prevPos[prevPos.length-1]);
+            swap(dragPath[dragPath.length-2], dragPath[dragPath.length-1]);
         },
     });
 });
