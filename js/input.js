@@ -2,8 +2,8 @@
 
 // prevents invalid character from being entered into the input fields
 function verifyInput(){
-    var e = event || window.event;
-    var key = e.keyCode || e.which;
+    var e=event||window.event;
+    var key=e.keyCode||e.which;
     // console.log(key);
     switch(key){
         case KEY.backspace: break;
@@ -19,7 +19,7 @@ function verifyInput(){
         case KEY.y: break;
         default:
             if(e.preventDefault) e.preventDefault;
-            e.returnValue = false;
+            e.returnValue=false;
     }
 }
 
@@ -113,7 +113,7 @@ function insertInputFields(x){
 
 // handles updating the saved orbs and updating the board view
 function inputSubmit(){
-    var inputData = getInputFields();
+    var inputData=getInputFields();
     var input=inputData[1];
     // console.log(input);
     var tmp;
@@ -163,9 +163,9 @@ $("#clear")
 // appends on click function to fill input fields to correspond to what is in the board view
 $("#randomize")
     .on("click", function(){
-        var inputStr = "";
+        var inputStr="";
         for(i=0; i<NUM_ORBS_1; i++){
-            inputStr+=convertOrbToText(Board[POS[i]].orb)
+            inputStr+=convertOrbToText(Board[POS[i]].orb);
         }
         console.log("\tBoard: " + inputStr);
         insertInputFields(inputStr);

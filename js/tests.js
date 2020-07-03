@@ -33,12 +33,12 @@ function getTestCase(test){
 }
 
 function inputTest(){
-    // var testCase = parseInt($("#testCase").val());
+    // var testCase=parseInt($("#testCase").val());
     var tmp;
     var testStr=getTestCase(parseInt($("#testCase").val()));
     // console.log(testStr);
     // clearInputFields();
-    console.log(testStr);
+    console.log("Board: "+testStr);
     insertInputFields(testStr);
     for(i=0; i<NUM_ORBS_1; i++){
         switch(testStr.charCodeAt(i)){
@@ -52,4 +52,12 @@ function inputTest(){
         Board[POS[i]].orb=tmp;
         changeOrbs(i, tmp);
     }
+}
+
+function printBoard(){
+    var tmp="";
+    for(i=0; i<NUM_ORBS_1; i++){
+        tmp+=convertOrbToText(Board[POS[i]].orb);
+    }
+    console.log(tmp.substr(0,6)+"\n"+tmp.substr(6,6)+"\n"+tmp.substr(12,6)+"\n"+tmp.substr(18,6)+"\n"+tmp.substr(24,6));
 }

@@ -28,9 +28,9 @@ function drawBoard(){
     var divStr;
     for(i=0; i<NUM_ORBS_1; i++){
         if(Board[POS[i]].squares==0){
-            divStr="<div class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg1.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/bomb.png\"></div>"
+            divStr="<div id=\"imgWrapper" + i + "\" class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg1.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/red.png\"></div>"
         } else {
-            divStr="<div class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg2.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/bomb.png\"></div>"
+            divStr="<div id=\"imgWrapper" + i + "\" class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg2.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/red.png\"></div>"
         }
         // console.log(divStr);
         $("#board").append(divStr);
@@ -38,14 +38,12 @@ function drawBoard(){
 }
 
 function boardInit(){
-    var orb="orb";
-    var squares="squares";
     var k=0;
     for(i=0; i<ROW_LEN_1; i++){
         for(j=0; j<COL_LEN_1; j++){
             Board[POS[k]]={};
-            Board[POS[k]][squares]=fillSquares(i, j);
-            Board[POS[k]][orb]=0;
+            Board[POS[k]].squares=fillSquares(i, j);
+            Board[POS[k]].orb=1;
             k++;
         }
     }
