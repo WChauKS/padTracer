@@ -1,52 +1,72 @@
-// handles initial board setup
-// position is set up as:
-// 51	52	53	54	55	56
-// 41	42	43	44	45	46
-// 31	32	33	34	35	36
-// 21	22	23	24	25	26
-// 11	12	13	14	15	16
-
-var Board = {};
-var POS=[];
-var k=0;
-for(i=ROW_LEN_1; i>0; i--){
-    for(j=1; j<COL_LEN_1+1; j++){
-        POS[k]=String(i) + String(j);
-        k++;
+class Board {
+    constructor(row, column) {
+        this.row = row;
+        this.column = column;
+        this.square = [];
     }
-}
 
-function fillSquares(i, j){
-    if((i+j)%2==0){
-        return 0;
-    } else {
-        return 1;
-    }
-}
-
-function drawBoard(){
-    var divStr;
-    for(i=0; i<NUM_ORBS_1; i++){
-        if(Board[POS[i]].squares==0){
-            divStr="<div id=\"imgWrapper" + i + "\" class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg1.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/red.png\"></div>"
+    fillSquares(i, j) {
+        if ((i+j) % 2 == 0){
+            return 0;
         } else {
-            divStr="<div id=\"imgWrapper" + i + "\" class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg2.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/red.png\"></div>"
+            return 1;
         }
-        // console.log(divStr);
-        $("#board").append(divStr);
     }
-}
 
-function boardInit(){
-    var k=0;
-    for(i=0; i<ROW_LEN_1; i++){
-        for(j=0; j<COL_LEN_1; j++){
-            Board[POS[k]]={};
-            Board[POS[k]].squares=fillSquares(i, j);
-            Board[POS[k]].orb=1;
-            k++;
+    drawBoard() {
+        var divStr;
+        for(var i = 0; i < NUM_ORBS_1; i++){
+            if(this.square[i].background == 0){
+                divStr="<div id=\"imgWrapper" + i + "\" class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg1.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/red.png\"></div>"
+            } else {
+                divStr="<div id=\"imgWrapper" + i + "\" class=\"imgWrapper\"><img class=\"squares\" src=\"img/bg2.png\"><img id=\"orb" + i + "\" class=\"orbs\" src=\"img/red.png\"></div>"
+            }
+            // console.log(divStr);
+            $("#board").append(divStr);
         }
     }
-    console.log(Board);
-    drawBoard();
+
+    boardInit() {
+        var k = 0;
+        for(var i = 0; i < ROW_LEN_1; i++){
+            for(var j = 0; j < COL_LEN_1; j++){
+                this.square[k] = {background: this.fillSquares(i,j), orb: new Orb(1)};
+                k++;
+            }
+        }
+        this.drawBoard();
+    }
+
+    randomize() {
+        var randOrb;
+        for(var i = 0; i < NUM_ORBS_1; i++){
+            randOrb = Math.floor(Math.random() * (Object.keys(ORBS).length - 1)) + 1;
+            this.square[i].orb = randOrb;
+            changeOrbs(i, randOrb);
+        }
+    }
+
+    clearBoard() {
+        var tmp;
+        for(var i = 0; i < NUM_ORBS_1; i++){
+            this.square[i].orb = ORBS.blank;
+            tmp = "#orb" + i;
+            $(tmp).attr("src", SRC.blank);
+        }
+        console.log("Board Cleared");
+    }
+
+    updateAfterMove() {
+        var tmp;
+        var boardStr = "";
+        for(var i = 0; i < NUM_ORBS_1; i++){
+            tmp = "#orb" + i;
+            this.square[i].orb = convertSrc($(tmp).attr("src"));
+            // console.log(this.square[i].orb);
+            boardStr += convertOrbToText(convertSrc($(tmp).attr("src")));
+        }
+        if(boardStr != "000000000000000000000000000000"){
+            console.log("Orbs were dragged\n\tBoard: "+boardStr);
+        }
+    }
 }

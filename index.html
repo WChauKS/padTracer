@@ -8,6 +8,7 @@
 	<script src="js/jquery-3.5.1.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/defs.js"></script>
+	<script src="js/orb.js"></script>
 	<script src="js/board.js"></script>
 	<script src="js/main.js"></script>
 </head>
@@ -28,13 +29,12 @@
 		</div>
 		<div id="board"></div>
 		<div id="controls">
-			<button id="randomize" class="btn" onclick="randomize()">Randomize</button>
-			<button id="clear" class="btn" onclick="clearBoard()">Clear</button>
+			<button id="randomize" class="btn">Randomize</button>
+			<button id="clear" class="btn">Clear</button>
 			<button id="drop" class="btn" onclick="drop()">Drop</button>
 		</div>
 	</div>
-	<script src="js/input.js"></script>
-	<script src="js/move.js"></script>
+	<script src="js/boardInteraction.js"></script>
 	<div id="test">
 		<label for="testForm" class="inputItem">Select test case:</label>
 		<form id="testForm" class="inputItem">

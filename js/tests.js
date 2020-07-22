@@ -49,7 +49,7 @@ function inputTest(){
             case KEY.p: tmp=ORBS.purple; break;//P
             case KEY.y: tmp=ORBS.yellow; break;//Y
         }
-        Board[POS[i]].orb=tmp;
+        board.square[i].orb=tmp;
         changeOrbs(i, tmp);
     }
 }
@@ -57,7 +57,7 @@ function inputTest(){
 function printBoard(){
     var tmp="";
     for(i=0; i<NUM_ORBS_1; i++){
-        tmp+=convertOrbToText(Board[POS[i]].orb);
+        tmp+=convertOrbToText(board.square[i].orb);
     }
     console.log(tmp.substr(0,6)+"\n"+tmp.substr(6,6)+"\n"+tmp.substr(12,6)+"\n"+tmp.substr(18,6)+"\n"+tmp.substr(24,6));
 }
