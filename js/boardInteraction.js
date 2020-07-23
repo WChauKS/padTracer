@@ -27,7 +27,7 @@ $(function(){
         containment: $("#board"),
         stack: $(".orbs"),
         snap: $(".squares"),
-        snapTolerance: 30,
+        // snapTolerance: 25,
         refreshPositions: true,
         // grid: [100, 100],    // causes helper clone to snap
         helper: "clone",
@@ -62,10 +62,12 @@ $(function(){
             ui.helper.css('z-index', "30");   // brings clone to front
             dragPath.push(e.target.id);
             // console.log("Hovering:", e.target.id);
-            $("#" + e.target.id).fadeTo("slow", 0.5);
-            $("#" + dragPath[dragPath.length-2]).fadeTo("fast", 1);
+            $("#" + e.target.id).fadeTo("fast", 0.3);
             swap(dragPath[dragPath.length-2], dragPath[dragPath.length-1]);
         },
+        out: function(e, ui){
+            $("#" + e.target.id).fadeTo("fast", 1);
+        }
     });
 });
 
