@@ -2,33 +2,31 @@ function getTestCase(test){
     switch(test){
         // test for input functions
         case 1: return "RRRRRRBBBBBBGGGGGGYYYYYYPPPPPP";     // simple 5 color board
-        case 2: return "RRRRRRBBBBBBGGGGGGYYYYYYPPPP";       // too little orbs
-        case 3: return "RRRRRRBBBBBBGGGGGGYYYYYYPPPPPPHH";   // too many orbs
-        case 4: return "RBGYPHRBGYPHRBGYPHRBGYPHRBGYPH";     // simple 6 color board
+        case 2: return "RBGYPHRBGYPHRBGYPHRBGYPHRBGYPH";     // simple 6 color board
 
         // bi color full clear boards
         // row
-        case 5: return "RRRRRRBBBBBBRRRRRRBBBBBBRRRRRR";    // exp: 5c
+        case 3: return "RRRRRRBBBBBBRRRRRRBBBBBBRRRRRR";    // exp: 5c
         // row with blobbing
-        case 6: return "RRRRRRRRRRRRBBBBBBRRRRRRRRRRRR";    // exp: 3c
+        case 4: return "RRRRRRRRRRRRBBBBBBRRRRRRRRRRRR";    // exp: 3c
         // column
-        case 7: return "RBRBRBRBRBRBRBRBRBRBRBRBRBRBRB";    // exp: 6c
+        case 5: return "RBRBRBRBRBRBRBRBRBRBRBRBRBRBRB";    // exp: 6c
         // column with blobbing
-        case 8: return "RRBBRRRRBBRRRRBBRRRRBBRRRRBBRR";    // exp: 3c
+        case 6: return "RRBBRRRRBBRRRRBBRRRRBBRRRRBBRR";    // exp: 3c
         // match 3
-        case 9: return "RRRBBBBBBRRRRRRBBBBBBRRRRRRBBB";    // exp: 10c
+        case 7: return "RRRBBBBBBRRRRRRBBBBBBRRRRRRBBB";    // exp: 10c
         // vdp/match3
-        case 10: return "RRRBBBRRRBBBRRRBBBBBBRRRRRRBBB";   // exp: 6c
+        case 8: return "RRRBBBRRRBBBRRRBBBBBBRRRRRRBBB";   // exp: 6c
         // vertical match 3 with connected row
-        case 11: return "RBRBRBRBRBRBRBRBRBBBBBBBRRRRRR";   // exp: 5c
+        case 9: return "RBRBRBRBRBRBRBRBRBBBBBBBRRRRRR";   // exp: 5c
         // horizontal match 3 with connected column
-        case 12: return "RRRBRBBBBBRBRRRBRBBBBBRBRRRBRB"    // exp: 6c
+        case 10: return "RRRBRBBBBBRBRRRBRBBBBBRBRRRBRB"    // exp: 6c
         // blob with single cascade
-        case 13: return "RRBBRRRRBBRRBBBBBBRRBBRRRRBBRR";   // exp: 3c
+        case 11: return "RRBBRRRRBBRRBBBBBBRRBBRRRRBBRR";   // exp: 3c
 
         // tri color
         // multiple cascades
-        case 14: return "HHHHHHHHHHHHHHRBHHHRBRBHRBBBRR";   // exp: 5c
+        case 12: return "HHHHHHHHHHHHHHRBHHHRBRBHRBBBRR";   // exp: 5c
     }
 }
 

@@ -29,7 +29,7 @@ $(function(){
         snap: $(".squares"),
         snapTolerance: 30,
         refreshPositions: true,
-        grid: [100, 100],
+        // grid: [100, 100],    // causes helper clone to snap
         helper: "clone",
         start: function(e, ui){
             dragPath = [];
@@ -45,6 +45,7 @@ $(function(){
             }
         },
         stop: function(e, ui){
+            $("#" + dragPath[dragPath.length-1]).fadeTo("fast", 1);
             board.updateAfterMove();
             // drop();
             // console.log("Path taken: "+dragPath);    //full path of orb drag is saved here
@@ -61,6 +62,8 @@ $(function(){
             ui.helper.css('z-index', "30");   // brings clone to front
             dragPath.push(e.target.id);
             // console.log("Hovering:", e.target.id);
+            $("#" + e.target.id).fadeTo("slow", 0.5);
+            $("#" + dragPath[dragPath.length-2]).fadeTo("fast", 1);
             swap(dragPath[dragPath.length-2], dragPath[dragPath.length-1]);
         },
     });
@@ -68,34 +71,17 @@ $(function(){
 
 /*******************************************************
  * BUTTONS
- * inputSubmit()
+ * inputSubmit
  * clear
  * randomize
 *******************************************************/
 
-// handles updating the saved orbs and updating the board view
-function inputSubmit(){
-    var inputData = getInputFields();
-    var input = inputData[1];
-    // console.log(input);
-    var tmp;
-    for(i = 0; i < NUM_ORBS_1; i++){
-        // console.log(input.charCodeAt(i));
-        switch(input.charCodeAt(i)){
-            case KEY.r: tmp = ORBS.red; break;//R
-            case KEY.b: tmp = ORBS.blue; break;//B
-            case KEY.g: tmp = ORBS.green; break;//G
-            case KEY.h: tmp = ORBS.heart; break;//H
-            case KEY.p: tmp = ORBS.purple; break;//P
-            case KEY.y: tmp = ORBS.yellow; break;//Y
-        }
-        board.square[i].orb = tmp;
-        changeOrbs(i, tmp);
-    }
-    console.log("Input was accepted\n\tBoard: " + input);
-}
+$("#inputSubmit")
+    .on("click", function(){
+        inputSubmit();
+    });
 
-// appends on click function to clear button to clear input fields
+// appends on click function to clear button to clear board and input fields
 $("#clear")
     .on("click", function(){
         board.clearBoard();
@@ -120,6 +106,7 @@ $("#randomize")
  * verifyInput()
  * getInputFields()
  * checkForSubmit()
+ * inputSubmit()
  * clearInputFields()
  * insertInputFields()
  * paste
@@ -196,6 +183,28 @@ function checkForSubmit(){
             $("#inputSubmit").attr("disabled", true);
         }
     }
+}
+
+// handles updating the saved orbs and updating the board view
+function inputSubmit(){
+    var inputData = getInputFields();
+    var input = inputData[1];
+    // console.log(input);
+    var tmp;
+    for(i = 0; i < NUM_ORBS_1; i++){
+        // console.log(input.charCodeAt(i));
+        switch(input.charCodeAt(i)){
+            case KEY.r: tmp = ORBS.red; break;//R
+            case KEY.b: tmp = ORBS.blue; break;//B
+            case KEY.g: tmp = ORBS.green; break;//G
+            case KEY.h: tmp = ORBS.heart; break;//H
+            case KEY.p: tmp = ORBS.purple; break;//P
+            case KEY.y: tmp = ORBS.yellow; break;//Y
+        }
+        board.square[i].orb = tmp;
+        changeOrbs(i, tmp);
+    }
+    console.log("Input was accepted\n\tBoard: " + input);
 }
 
 // clears all of the input fields
