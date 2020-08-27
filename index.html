@@ -8,39 +8,39 @@
 	<script src="js/jquery-3.5.1.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
 	<script src="js/defs.js"></script>
+	<script src="js/orb.js"></script>
 	<script src="js/board.js"></script>
 	<script src="js/main.js"></script>
 </head>
 <body>
 	<div id="main">
 		<div id="input">
-			<label for="inputForm" class="inputItem">Enter Orbs:</label>
-			<!-- <input type="text" id="inputStr" style="text-transform: uppercase" placeholder="XXXXXX-XXXXXX-XXXXXX-XXXXXX-XXXXXX" maxlength="30" minlength="30"> -->
-			<form id="inputForm" class="inputItem">
+			<form id="inputForm" class="inputItem" onsubmit="return false">
+				<label for="inputForm" class="inputItem">Enter Orbs:</label>
 				<input id="input1" class="inputField" style="text-transform: uppercase" maxlength="6" minlength="6" placeholder="Row 1">
 				<input id="input2" class="inputField" style="text-transform: uppercase" maxlength="6" minlength="6" placeholder="Row 2">
 				<input id="input3" class="inputField" style="text-transform: uppercase" maxlength="6" minlength="6" placeholder="Row 3">
 				<input id="input4" class="inputField" style="text-transform: uppercase" maxlength="6" minlength="6" placeholder="Row 4">
 				<input id="input5" class="inputField" style="text-transform: uppercase" maxlength="6" minlength="6" placeholder="Row 5">
+				<button id="inputSubmit" class="btn inputItem" disabled="true">Submit</button>
 			</form>
-			<button id="inputSubmit" class="btn inputItem" onclick="inputSubmit()" disabled="true">Submit</button>
 			<div id="test"></div>
 		</div>
 		<div id="board"></div>
 		<div id="controls">
-			<button id="randomize" class="btn" onclick="randomize()">Randomize</button>
-			<button id="clear" class="btn" onclick="clearBoard()">Clear</button>
+			<button id="randomize" class="btn">Randomize</button>
+			<button id="clear" class="btn">Clear</button>
 			<button id="drop" class="btn" onclick="drop()">Drop</button>
 		</div>
 	</div>
-	<script src="js/input.js"></script>
-	<script src="js/move.js"></script>
+	<script src="js/boardInteraction.js"></script>
 	<div id="test">
-		<label for="testForm" class="inputItem">Select test case:</label>
-		<form id="testForm" class="inputItem">
+		<br><br><br>
+		<form id="testForm" class="inputItem" onsubmit="return false">
+			<label for="testForm" class="inputItem">Select test case:</label>
 			<input id="testCase" class="testField" type="number" min="1" max="14">
+			<button id="testSubmit" class="btn inputItem" onclick="inputTest()">Submit Test</button>
 		</form>
-		<button id="testSubmit" class="btn inputItem" onclick="inputTest()">Submit Test</button>
 	</div>
 	<script src="js/tests.js"></script>
 </body>
