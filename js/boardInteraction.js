@@ -96,7 +96,7 @@ $("#randomize")
         board.randomize();
         var inputStr = "";
         for(i = 0; i < NUM_ORBS_1; i++){
-            inputStr += convertOrbToText(board.square[i].orb);
+            inputStr += convertOrbToText(board.square[i].orb.getColor());
         }
         console.log("Board was randomized\n\tBoard: " + inputStr);
         insertInputFields(inputStr);

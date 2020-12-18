@@ -6,6 +6,7 @@ $(function(){
 function changeOrbs(index, newOrb){
     var tmp="#orb" + String(index);
     switch(newOrb){
+        case ORBS.blank: $(tmp).attr("src", SRC.blank); break;
         case ORBS.red: $(tmp).attr("src", SRC.red); break;
         case ORBS.blue: $(tmp).attr("src", SRC.blue); break;
         case ORBS.green: $(tmp).attr("src", SRC.green); break;

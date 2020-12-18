@@ -41,17 +41,15 @@ class Board {
         var randOrb;
         for(var i = 0; i < NUM_ORBS_1; i++){
             randOrb = Math.floor(Math.random() * (Object.keys(ORBS).length - 1)) + 1;
-            this.square[i].orb = randOrb;
+            this.square[i].orb.setColor(randOrb);
             changeOrbs(i, randOrb);
         }
     }
 
     clearBoard() {
-        var tmp;
         for(var i = 0; i < NUM_ORBS_1; i++){
-            this.square[i].orb = ORBS.blank;
-            tmp = "#orb" + i;
-            $(tmp).attr("src", SRC.blank);
+            this.square[i].orb.setColor(0);
+            changeOrbs(i, 0);
         }
         console.log("Board Cleared");
     }
@@ -61,7 +59,7 @@ class Board {
         var boardStr = "";
         for(var i = 0; i < NUM_ORBS_1; i++){
             tmp = "#orb" + i;
-            this.square[i].orb = convertSrc($(tmp).attr("src"));
+            this.square[i].orb.setColor(convertSrc($(tmp).attr("src")));
             // console.log(this.square[i].orb);
             boardStr += convertOrbToText(convertSrc($(tmp).attr("src")));
         }
@@ -69,4 +67,5 @@ class Board {
             console.log("Orbs were dragged\n\tBoard: "+boardStr);
         }
     }
+    // updateAfterDrop() {}
 }
