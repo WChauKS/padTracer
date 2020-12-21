@@ -21,7 +21,6 @@ function init(){
     // boardInit();
     board = new Board(ROW_LEN_1, COL_LEN_1);
     board.boardInit();
-    console.log(board.square);
 }
 
 //     document.getElementById("clear").addEventListener("click", clear);

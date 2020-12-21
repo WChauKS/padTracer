@@ -95,10 +95,11 @@ $("#randomize")
     .on("click", function(){
         board.randomize();
         var inputStr = "";
-        for(i = 0; i < NUM_ORBS_1; i++){
+        for(i = 0; i < board.numOrbs; i++){
             inputStr += convertOrbToText(board.square[i].orb.getColor());
         }
-        console.log("Board was randomized\n\tBoard: " + inputStr);
+        console.log("Board was randomized");
+        printBoardStr(inputStr);
         insertInputFields(inputStr);
         checkForSubmit();
     });
@@ -165,7 +166,7 @@ function checkForSubmit(){
         inputStr = inputData[1];
         // console.log(inputStr);
         var validCheck = 0;
-        for(i = 0; i < NUM_ORBS_1; i++){
+        for(i = 0; i < board.numOrbs; i++){
             if(inputStr[i] == "R"
                 || inputStr[i] == "B"
                 || inputStr[i] == "G"
@@ -178,7 +179,7 @@ function checkForSubmit(){
             }
         }
         // console.log(validCheck);
-        if(validCheck == NUM_ORBS_1){
+        if(validCheck == board.numOrbs){
             $("#inputSubmit").attr("disabled", false);
             // console.log("submit=t");
         } else {
@@ -193,7 +194,7 @@ function inputSubmit(){
     var input = inputData[1];
     // console.log(input);
     var tmp;
-    for(i = 0; i < NUM_ORBS_1; i++){
+    for(i = 0; i < board.numOrbs; i++){
         // console.log(input.charCodeAt(i));
         switch(input.charCodeAt(i)){
             case KEY.r: tmp = ORBS.red; break;//R
@@ -206,7 +207,8 @@ function inputSubmit(){
         board.square[i].orb = tmp;
         changeOrbs(i, tmp);
     }
-    console.log("Input was accepted\n\tBoard: " + input);
+    console.log("Input was accepted");
+    printBoardStr(input);
 }
 
 // clears all of the input fields

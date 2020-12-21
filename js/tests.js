@@ -36,9 +36,9 @@ function inputTest(){
     var testStr=getTestCase(parseInt($("#testCase").val()));
     // console.log(testStr);
     // clearInputFields();
-    console.log("Board: "+testStr);
+    printBoardStr(testStr);
     insertInputFields(testStr);
-    for(i=0; i<NUM_ORBS_1; i++){
+    for(i=0; i<board.numOrbs; i++){
         switch(testStr.charCodeAt(i)){
             case KEY.r: tmp=ORBS.red; break;//R
             case KEY.b: tmp=ORBS.blue; break;//B
@@ -47,15 +47,7 @@ function inputTest(){
             case KEY.p: tmp=ORBS.purple; break;//P
             case KEY.y: tmp=ORBS.yellow; break;//Y
         }
-        board.square[i].orb=tmp;
+        board.square[i].orb.setColor(tmp);
         changeOrbs(i, tmp);
     }
-}
-
-function printBoard(){
-    var tmp="";
-    for(i=0; i<NUM_ORBS_1; i++){
-        tmp+=convertOrbToText(board.square[i].orb);
-    }
-    console.log(tmp.substr(0,6)+"\n"+tmp.substr(6,6)+"\n"+tmp.substr(12,6)+"\n"+tmp.substr(18,6)+"\n"+tmp.substr(24,6));
 }
