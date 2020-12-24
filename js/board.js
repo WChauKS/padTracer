@@ -7,6 +7,7 @@ class Board {
         this.numOrbs = row * column;
     }
 
+    //fills the board's background with a checkerboard pattern
     fillSquares(i, j) {
         if ((i+j) % 2 == 0){
             return 0;
@@ -15,6 +16,7 @@ class Board {
         }
     }
 
+    //takes the initial board state and appends images to the board div
     drawBoard() {
         var divStr;
         for(var i = 0; i < this.numOrbs; i++){
@@ -28,17 +30,19 @@ class Board {
         }
     }
 
+    //initializes the board with the proper background and with each orb being red
     boardInit() {
         var k = 0;
         for(var i = 0; i < this.row; i++){
             for(var j = 0; j < this.column; j++){
-                this.square[k] = {background: this.fillSquares(i,j), orb: new Orb(1)};
+                this.square[k] = {background: this.fillSquares(i,j), orb: new Orb(ORBS.red)};
                 k++;
             }
         }
         this.drawBoard();
     }
 
+    //randomly assigns new orb colors and calls changeOrbs() to update the gui
     randomize() {
         var randOrb;
         for(var i = 0; i < this.numOrbs; i++){
@@ -48,16 +52,17 @@ class Board {
         }
     }
 
+    //removes the orb by setting the orb to blank and updates gui
     removeOrb(index) {
-        this.square[index].orb.setColor(0);
+        this.square[index].orb.setColor(ORBS.blank);
+        changeOrbs(index, ORBS.blank);
     }
 
+    //iterates over every orb and calls removeOrb to remove them
     clearBoard() {
         for(var i = 0; i < this.numOrbs; i++){
             this.removeOrb(i);
-            changeOrbs(i, 0);
         }
-        console.log("Board Cleared");
     }
 
     // rows start with 0, 6, 12, 18, 24 and increment by 1 on each
@@ -66,7 +71,7 @@ class Board {
         var orbs = [];
         var i = 0;
         while(i < this.column) {
-            orbs.push(row*6 + i);
+            orbs.push(row*this.column + i);
             i++
         }
         return orbs;
@@ -82,10 +87,38 @@ class Board {
         return orbs;
     }
 
-    //receives a list of orbs (in row and column) to check if there are any matches
-    //adds any combos found to the remove list
-    getMatches(removeList, uncheckedListOfOrbs) {
-
+    //receives a list of orbs (in row and column) and minimum number to form combo to check if there are any matches
+    //adds any combos found in the row/column to the combo list, which is then added to the remove list
+    //checks to see if there are any blank orbs and disregards them
+    getMatches(listOfOrbs, min, removeList) {
+        var comboColor, nextOrbColor;
+        var currentCombo = [];
+        for(var i = 0; i < listOfOrbs.length; i++) {
+            if(currentCombo.length == 0) {
+                comboColor = this.square[listOfOrbs[i]].orb.getColor();
+                if(comboColor != ORBS.blank) {
+                    currentCombo.push(listOfOrbs[i]);
+                }
+            }
+            else {
+                nextOrbColor = this.square[listOfOrbs[i]].orb.getColor();
+                if(comboColor != ORBS.blank && isMatch(comboColor, nextOrbColor)) {
+                    currentCombo.push(listOfOrbs[i]);
+                    if(i ==listOfOrbs.length - 1 && currentCombo.length >= min) {
+                        this.addComboToRemoveList(removeList, currentCombo);
+                    }
+                }
+                else {
+                    if(currentCombo.length >= min) {
+                        console.log("combo logged");
+                        this.addComboToRemoveList(removeList, currentCombo);
+                    }
+                    comboColor = this.square[listOfOrbs[i]].orb.getColor();
+                    currentCombo = [];
+                    currentCombo.push(listOfOrbs[i]);
+                }
+            }
+        }
     }
 
     //receives a list of orb numbers that make up the combo and adds it to the remove list
@@ -102,63 +135,46 @@ class Board {
         var minNumForMatch = 3;     //minimum number to be considered a match
         var orbsForRemoval = [];    //orb positions of combos found so that they can be removed
         
+        //gets matches from rows
         for(var i = 0; i < this.row; i++) {
-            var comboColor, nextOrbColor;
-            var currentCombo = [];
-            var row = this.getRow(i);
-            // console.log(row);
-            for(var j=0; j<row.length; j++) {
-                if(currentCombo.length == 0) {
-                    comboColor = this.square[row[j]].orb.getColor();
-                    currentCombo.push(row[j]);
-                }
-                else {
-                    nextOrbColor = this.square[row[j]].orb.getColor();
-                    if(isMatch(comboColor, nextOrbColor)) {
-                        currentCombo.push(row[j]);
-                        if(j==row.length-1 && currentCombo.length >= minNumForMatch) {
-                            this.addComboToRemoveList(orbsForRemoval, currentCombo);
-                        }
-                    }
-                    else {
-                        if(currentCombo.length >= minNumForMatch) {
-                            console.log("combo logged");
-                            this.addComboToRemoveList(orbsForRemoval, currentCombo);
-                        }
-                        comboColor = this.square[row[j]].orb.getColor();
-                        currentCombo = [];
-                        currentCombo.push(row[j]);
-                    }
-                }
-            }
+            this.getMatches(this.getRow(i), minNumForMatch, orbsForRemoval);
         }
 
+        //gets matches from columns
         for(var i = 0; i < this.column; i++) {
-            var column = this.getColumn(i);
-            // console.log(column);
+            this.getMatches(this.getColumn(i), minNumForMatch, orbsForRemoval);
         }
 
-        console.log(orbsForRemoval);
+        if(orbsForRemoval.length > 0) {
+            matchFound = true;
+        }
 
         this.updateHasMatches(matchFound);
-        return matchFound;
+        console.log(orbsForRemoval);
+        return orbsForRemoval;
     }
 
-    // removeMatches(x) {
-    //     console.log(x);
-    // }
+    //receives a list of the matches and calls removeOrb to remove them
+    removeMatches(listOfMatches) {
+        for(var i = 0; i < listOfMatches.length; i++) {
+            this.removeOrb(listOfMatches[i]);
+        }
+    }
 
+    //updates whether or not the board has matches
     updateHasMatches(matchFound) {
-        if (matchFound == false) this.hasMatches = false;
-        else this.hasMatches = true;
+        if (matchFound) this.hasMatches = true;
+        else this.hasMatches = false;
     }
 
-    // drop() {
-    //     do {
-    //         this.removeMatches(this.checkForMatch());
-    //     } while(this.hasMatches == true);
-    // }
+    drop() {
+        // do {
+        //     this.removeMatches(this.checkForMatch());
+        // } while(this.hasMatches == true);
+        this.removeMatches(this.checkForMatch());
+    }
 
+    //after orbs are moved on the gui, it updates the internal board to reflect the changes
     updateAfterMove() {
         var tmp;
         var boardStr = "";

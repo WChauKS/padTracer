@@ -88,6 +88,7 @@ $("#clear")
     .on("click", function(){
         board.clearBoard();
         clearInputFields();
+        console.log("Board was cleared");
     });
 
 // appends on click function to fill input fields to correspond to what is in the board view
