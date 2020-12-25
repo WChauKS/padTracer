@@ -6,31 +6,3 @@ var KEY = { backspace: 8, delete: 46, left: 37, right: 39, v: 86, r: 82, b: 66, 
 var DIR = { up:1, down: 2, right: 3, left: 4 };
 var ROW_LEN_1 = 5;
 var COL_LEN_1 = 6;
-
-// convert assigned orb value to char equivalent
-function convertOrbToText(x){
-    switch(x){
-        case 0: return "0"; break;
-        case 1: return "R"; break;
-        case 2: return "B"; break;
-        case 3: return "G"; break;
-        case 4: return "Y"; break;
-        case 5: return "P"; break;
-        case 6: return "H"; break;
-    }
-};
-
-// convert image source back to orb val
-function convertSrc(src){
-    if(src == SRC.blank){ return ORBS_ALL.blank };
-    if(src == SRC.red){ return ORBS_ALL.red };
-    if(src == SRC.blue){ return ORBS_ALL.blue };
-    if(src == SRC.green){ return ORBS_ALL.green };
-    if(src == SRC.yellow){ return ORBS_ALL.yellow };
-    if(src == SRC.purple){ return ORBS_ALL.purple };
-    if(src == SRC.heart){ return ORBS_ALL.heart };
-    if(src == SRC.jammer){ return ORBS_ALL.jammer };
-    if(src == SRC.poison){ return ORBS_ALL.poison };
-    if(src == SRC.mortal){ return ORBS_ALL.mortal };
-    if(src == SRC.bomb){ return ORBS_ALL.bomb };
-};

@@ -42,20 +42,33 @@ class Board {
         this.drawBoard();
     }
 
-    //randomly assigns new orb colors and calls changeOrbs() to update the gui
+    //updates the gui and the internal orb color
+    changeOrb(index, newOrb){
+        var tmp="#orb" + String(index);
+        switch(newOrb){
+            case ORBS.blank: $(tmp).attr("src", SRC.blank); break;
+            case ORBS.red: $(tmp).attr("src", SRC.red); break;
+            case ORBS.blue: $(tmp).attr("src", SRC.blue); break;
+            case ORBS.green: $(tmp).attr("src", SRC.green); break;
+            case ORBS. yellow: $(tmp).attr("src", SRC.yellow); break;
+            case ORBS.purple: $(tmp).attr("src", SRC.purple); break;
+            case ORBS.heart: $(tmp).attr("src", SRC.heart); break;
+        }
+        this.square[index].orb.setColor(newOrb);
+    }
+
+    //randomly assigns new orb colors and calls changeOrb() to update the gui and internal colors
     randomize() {
         var randOrb;
         for(var i = 0; i < this.numOrbs; i++){
             randOrb = Math.floor(Math.random() * (Object.keys(ORBS).length - 1)) + 1;
-            this.square[i].orb.setColor(randOrb);
-            changeOrbs(i, randOrb);
+            this.changeOrb(i, randOrb);
         }
     }
 
     //removes the orb by setting the orb to blank and updates gui
     removeOrb(index) {
-        this.square[index].orb.setColor(ORBS.blank);
-        changeOrbs(index, ORBS.blank);
+        this.changeOrb(index, ORBS.blank);
     }
 
     //iterates over every orb and calls removeOrb to remove them
@@ -156,9 +169,14 @@ class Board {
 
     //receives a list of the matches and calls removeOrb to remove them
     removeMatches(listOfMatches) {
-        for(var i = 0; i < listOfMatches.length; i++) {
-            this.removeOrb(listOfMatches[i]);
-        }
+        var fadeTime = 1500;
+        fadeRemoveOrbs(listOfMatches, 1000);
+        setTimeout(function() {
+            for(var i = 0; i < listOfMatches.length; i++) {
+                board.removeOrb(listOfMatches[i]);
+            }
+            fadeRemoveOrbs(listOfMatches, 0);
+        }, 2000);
     }
 
     //updates whether or not the board has matches

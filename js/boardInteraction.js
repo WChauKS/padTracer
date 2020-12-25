@@ -205,8 +205,7 @@ function inputSubmit(){
             case KEY.p: tmp = ORBS.purple; break;//P
             case KEY.y: tmp = ORBS.yellow; break;//Y
         }
-        board.square[i].orb = tmp;
-        changeOrbs(i, tmp);
+        board.changeOrb(i, tmp);
     }
     console.log("Input was accepted");
     printBoardStr(input);
