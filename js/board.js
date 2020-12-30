@@ -7,7 +7,7 @@ class Board {
         this.numOrbs = row * column;
     }
 
-    //fills the board's background with a checkerboard pattern
+    // fills the board's background with a checkerboard pattern
     fillSquares(i, j) {
         if ((i+j) % 2 == 0){
             return 0;
@@ -16,8 +16,8 @@ class Board {
         }
     }
 
-    //takes the initial board state and appends images to the board div
-    drawBoard() {
+    // takes the initial board state and appends images to the board div
+    drawInitBoard() {
         var divStr;
         for(var i = 0; i < this.numOrbs; i++){
             if(this.square[i].background == 0){
@@ -30,7 +30,7 @@ class Board {
         }
     }
 
-    //initializes the board with the proper background and with each orb being red
+    // initializes the board with the proper background and with each orb being red
     boardInit() {
         var k = 0;
         for(var i = 0; i < this.row; i++){
@@ -39,10 +39,10 @@ class Board {
                 k++;
             }
         }
-        this.drawBoard();
+        this.drawInitBoard();
     }
 
-    //updates the gui and the internal orb color
+    // updates the gui and the internal orb color
     changeOrb(index, newOrb){
         var tmp="#orb" + String(index);
         switch(newOrb){
@@ -57,7 +57,7 @@ class Board {
         this.square[index].orb.setColor(newOrb);
     }
 
-    //randomly assigns new orb colors and calls changeOrb() to update the gui and internal colors
+    // randomly assigns new orb colors and calls changeOrb() to update the gui and internal colors
     randomize() {
         var randOrb;
         for(var i = 0; i < this.numOrbs; i++){
@@ -66,12 +66,12 @@ class Board {
         }
     }
 
-    //removes the orb by setting the orb to blank and updates gui
+    // removes the orb by setting the orb to blank and updates gui
     removeOrb(index) {
         this.changeOrb(index, ORBS.blank);
     }
 
-    //iterates over every orb and calls removeOrb to remove them
+    // iterates over every orb and calls removeOrb to remove them
     clearBoard() {
         for(var i = 0; i < this.numOrbs; i++){
             this.removeOrb(i);
@@ -100,9 +100,9 @@ class Board {
         return orbs;
     }
 
-    //receives a list of orbs (in row and column) and minimum number to form combo to check if there are any matches
-    //adds any combos found in the row/column to the combo list, which is then added to the remove list
-    //checks to see if there are any blank orbs and disregards them
+    // receives a list of orbs (in row and column) and minimum number to form combo to check if there are any matches
+    // adds any combos found in the row/column to the combo list, which is then added to the remove list
+    // checks to see if there are any blank orbs and disregards them
     getMatches(listOfOrbs, min, removeList) {
         var comboColor, nextOrbColor;
         var currentCombo = [];
@@ -134,26 +134,26 @@ class Board {
         }
     }
 
-    //receives a list of orb numbers that make up the combo and adds it to the remove list
+    // receives a list of orb numbers that make up the combo and adds it to the remove list
     addComboToRemoveList(removeList, comboOrbNums) {
         for(var tmp = 0; tmp < comboOrbNums.length; tmp++) {
             removeList.push(comboOrbNums[tmp]);
         }
     }
 
-    //calls getMatches on each row and column and stores any combos to the remove list
-    //updates matchFound
+    // calls getMatches on each row and column and stores any combos to the remove list
+    // updates matchFound
     checkForMatch() {
         var matchFound = false;
-        var minNumForMatch = 3;     //minimum number to be considered a match
-        var orbsForRemoval = [];    //orb positions of combos found so that they can be removed
+        var minNumForMatch = 3;     // minimum number to be considered a match
+        var orbsForRemoval = [];    // orb positions of combos found so that they can be removed
         
-        //gets matches from rows
+        // gets matches from rows
         for(var i = 0; i < this.row; i++) {
             this.getMatches(this.getRow(i), minNumForMatch, orbsForRemoval);
         }
 
-        //gets matches from columns
+        // gets matches from columns
         for(var i = 0; i < this.column; i++) {
             this.getMatches(this.getColumn(i), minNumForMatch, orbsForRemoval);
         }
@@ -163,36 +163,84 @@ class Board {
         }
 
         this.updateHasMatches(matchFound);
-        console.log(orbsForRemoval);
         return orbsForRemoval;
     }
 
-    //receives a list of the matches and calls removeOrb to remove them
+    // receives a list of the matches and calls removeOrb to remove them
+    // first reduces the opacity by fadetime in milliseconds, then when complete, it will remove the orb
+    // since it needs to wait for the fade to finish, promises needed to be used
     removeMatches(listOfMatches) {
-        var fadeTime = 1500;
-        fadeRemoveOrbs(listOfMatches, 1000);
-        setTimeout(function() {
-            for(var i = 0; i < listOfMatches.length; i++) {
-                board.removeOrb(listOfMatches[i]);
-            }
-            fadeRemoveOrbs(listOfMatches, 0);
-        }, 2000);
+        return new Promise(resolve => {
+            var fadeTime = 1000;
+            fadeRemoveOrbs(listOfMatches, fadeTime);
+            setTimeout(() => {
+                for(var i = 0; i < listOfMatches.length; i++) {
+                    board.removeOrb(listOfMatches[i]);
+                }
+                fadeRemoveOrbs(listOfMatches, 0);
+                resolve();
+            }, fadeTime * 0.9);     // if delay for full fadeTime amount, orbs flicker after removal
+        });
     }
 
-    //updates whether or not the board has matches
+    // updates whether or not the board has matches
     updateHasMatches(matchFound) {
         if (matchFound) this.hasMatches = true;
         else this.hasMatches = false;
     }
 
-    drop() {
-        // do {
-        //     this.removeMatches(this.checkForMatch());
-        // } while(this.hasMatches == true);
-        this.removeMatches(this.checkForMatch());
+    // gets the position of 2 orbs and swaps the color of them
+    swap(orb1, orb2) {
+        var tmp = this.square[orb1].orb.getColor();
+        this.changeOrb(orb1, this.square[orb2].orb.getColor());
+        this.changeOrb(orb2, tmp);
     }
 
-    //after orbs are moved on the gui, it updates the internal board to reflect the changes
+    // when orbs are removed, orbs above them will drop down
+    dropColumn(columnNum) {
+        var column = this.getColumn(columnNum);
+        var colors = [];
+        var blankCount = 0;
+        // counts how many blank spaces there are, and uses an array to keep track of the order of the orbs
+        for(var i = 0; i < column.length; i++) {
+            if(this.square[column[i]].orb.getColor() != '0') {
+                colors.push(this.square[column[i]].orb.getColor());
+            } else {
+                blankCount++;
+            }
+        }
+        // updates the board by using the blank count to fill the blank orb spaces at the top
+        // of the column, then uses the colors array to fill in the rest
+        var idx = 0;
+        for(var i = 0; i < column.length; i++) {
+            if(blankCount != 0) {
+                this.changeOrb(column[i], ORBS.blank);
+                blankCount--;
+            } else {
+                this.changeOrb(column[i], colors[idx]);
+                idx++;
+            }
+        }
+    }
+
+    dropBoard() {
+        for(var i = 0; i < this.column; i++) {
+            this.dropColumn(i);
+        }
+    }
+
+    // calls removeMatches when there are matches on the board
+    // if there are open spaces, the orbs above them will drop and fill the position
+    async drop() {
+        var orbsForRemoval = this.checkForMatch();
+        while(this.hasMatches == true) {
+            orbsForRemoval = this.checkForMatch();
+            await this.removeMatches(orbsForRemoval);
+            this.dropBoard();
+        }
+    }
+
+    // after orbs are moved on the gui, it updates the internal board to reflect the changes
     updateAfterMove() {
         var tmp;
         var boardStr = "";
@@ -207,5 +255,4 @@ class Board {
             printBoardStr(boardStr);
         }
     }
-    // updateAfterDrop() {}
 }

@@ -30,7 +30,7 @@ function convertSrc(src){
 function printBoard(){
     var tmp = "";
     for(i = 0; i < board.numOrbs; i++){
-        tmp += convertOrbToText(board.square[i].orb);
+        tmp += convertOrbToText(board.square[i].orb.getColor());
     }
     console.log("\t"+tmp.substr(0,6)+"\n\t"+tmp.substr(6,6)+"\n\t"+tmp.substr(12,6)+"\n\t"+tmp.substr(18,6)+"\n\t"+tmp.substr(24,6));
 }
