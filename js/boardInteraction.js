@@ -3,12 +3,12 @@ var origin = "";
 
 /*******************************************************
  * MOVING ORBS
- * swap()
+ * dragSwap()
  * draggable
  * droppable
 *******************************************************/
 // gets img source of previous position and current position and swaps them
-function swap(prev, cur){
+function dragSwap(prev, cur){
     // adding # to use as ID
     var prevElement = "#" + prev;
     var curElement = "#" + cur;
@@ -40,7 +40,7 @@ $(function(){
             if(ui.position.top == 0 && ui.position.left == 0){
                 if(dragPath[dragPath.length-1] != origin){
                     dragPath.push(origin);
-                    swap(dragPath[dragPath.length - 2], dragPath[dragPath.length - 1]);
+                    dragSwap(dragPath[dragPath.length - 2], dragPath[dragPath.length - 1]);
                 }
             }
         },
@@ -63,7 +63,7 @@ $(function(){
             dragPath.push(e.target.id);
             // console.log("Hovering:", e.target.id);
             $("#" + e.target.id).fadeTo("fast", 0.3);
-            swap(dragPath[dragPath.length-2], dragPath[dragPath.length-1]);
+            dragSwap(dragPath[dragPath.length-2], dragPath[dragPath.length-1]);
         },
         out: function(e, ui){
             $("#" + e.target.id).fadeTo("fast", 1);
@@ -88,6 +88,7 @@ $("#clear")
     .on("click", function(){
         board.clearBoard();
         clearInputFields();
+        console.log("Board was cleared");
     });
 
 // appends on click function to fill input fields to correspond to what is in the board view
@@ -204,8 +205,7 @@ function inputSubmit(){
             case KEY.p: tmp = ORBS.purple; break;//P
             case KEY.y: tmp = ORBS.yellow; break;//Y
         }
-        board.square[i].orb = tmp;
-        changeOrbs(i, tmp);
+        board.changeOrb(i, tmp);
     }
     console.log("Input was accepted");
     printBoardStr(input);
@@ -244,8 +244,8 @@ function insertInputFields(x){
 }
 
 $(".inputField")
-    //fired when key is released
-    //advances to the next input field when current one is filled
+    // fired when key is released
+    // advances to the next input field when current one is filled
     .keyup(function(){
         var $inputField = $(this);
         var numChar = $inputField.val().length;
@@ -255,7 +255,7 @@ $(".inputField")
         }
         checkForSubmit();
     })
-    //fired when key is pressed
+    // fired when key is pressed
     .keydown(function(){
         verifyInput();
         // console.log($("#input1").value);

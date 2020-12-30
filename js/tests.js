@@ -47,7 +47,6 @@ function inputTest(){
             case KEY.p: tmp=ORBS.purple; break;//P
             case KEY.y: tmp=ORBS.yellow; break;//Y
         }
-        board.square[i].orb.setColor(tmp);
-        changeOrbs(i, tmp);
+        board.changeOrb(i, tmp);
     }
 }

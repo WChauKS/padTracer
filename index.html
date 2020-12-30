@@ -32,6 +32,7 @@
 		<div id="controls">
 			<button id="randomize" class="btn">Randomize</button>
 			<button id="clear" class="btn">Clear</button>
+			<!-- <button id="drop" class="btn" onclick="board.drop()">Drop</button> -->
 			<button id="drop" class="btn" onclick="board.drop()">Drop</button>
 		</div>
 	</div>
@@ -40,7 +41,7 @@
 		<br><br><br>
 		<form id="testForm" class="inputItem" onsubmit="return false">
 			<label for="testForm" class="inputItem">Select test case:</label>
-			<input id="testCase" class="testField" type="number" min="1" max="14">
+			<input id="testCase" class="testField" type="number" min="1" max="12" value="1">
 			<button id="testSubmit" class="btn inputItem" onclick="inputTest()">Submit Test</button>
 		</form>
 	</div>
