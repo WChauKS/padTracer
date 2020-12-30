@@ -50,14 +50,12 @@ function fadeRemoveOrbs(listOfOrbs, fadeTime) {
     var orbStr = "#orb";
     if(fadeTime != 0){
         for(var i = 0; i < listOfOrbs.length; i++) {
-            var tmp = orbStr + listOfOrbs[i];
-            $(tmp).fadeTo(fadeTime, 0)
+            $(orbStr + listOfOrbs[i]).fadeTo(fadeTime, 0)
         }
     }
     else {
         for(var i = 0; i < listOfOrbs.length; i++) {
-            var tmp = orbStr + listOfOrbs[i];
-            $(tmp).fadeTo(fadeTime, 100);
+            $(orbStr + listOfOrbs[i]).fadeTo(fadeTime, 100);
         }
     }
 }

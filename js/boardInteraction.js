@@ -71,6 +71,19 @@ $(function(){
     });
 });
 
+function fullDraggableDisable(toggle) {
+    var orbStr = "#orb";
+    if(toggle == true) {
+        for(var i = 0; i < board.numOrbs; i++) {
+            $(orbStr + i).draggable('disable');
+        }
+    } else {
+        for(var i = 0; i < board.numOrbs; i++) {
+            $(orbStr + i).draggable('enable');
+        }
+    }
+}
+
 /*******************************************************
  * BUTTONS
  * inputSubmit
@@ -80,6 +93,7 @@ $(function(){
 
 $("#inputSubmit")
     .on("click", function(){
+        fullDraggableDisable(false);
         inputSubmit();
     });
 
@@ -94,6 +108,7 @@ $("#clear")
 // appends on click function to fill input fields to correspond to what is in the board view
 $("#randomize")
     .on("click", function(){
+        fullDraggableDisable(false);
         board.randomize();
         var inputStr = "";
         for(i = 0; i < board.numOrbs; i++){

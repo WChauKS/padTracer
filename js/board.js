@@ -237,6 +237,7 @@ class Board {
             orbsForRemoval = this.checkForMatch();
             await this.removeMatches(orbsForRemoval);
             this.dropBoard();
+            fullDraggableDisable(true);
         }
     }
 
