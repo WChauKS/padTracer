@@ -252,7 +252,6 @@ class Board {
             boardStr += convertOrbToText(convertSrc($(tmp).attr("src")));
         }
         if(boardStr != "000000000000000000000000000000"){
-            console.log("Orbs were dragged");
             printBoardStr(boardStr);
         }
     }

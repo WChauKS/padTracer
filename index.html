@@ -7,6 +7,7 @@
 
 	<script src="js/jquery-3.5.1.min.js"></script>
 	<script src="js/jquery-ui.min.js"></script>
+	<script src="js/jquery.ui.touch-punch.min.js"></script>
 	<script src="js/utils.js"></script>
 	<script src="js/defs.js"></script>
 	<script src="js/orb.js"></script>
@@ -30,10 +31,13 @@
 		</div>
 		<div id="board"></div>
 		<div id="controls">
+			<label class="switch">
+				<input type="checkbox" unchecked>
+				<span class="slider round"></span>
+				<span class="skyfallText">Skyfall</span>
+			</label>
 			<button id="randomize" class="btn">Randomize</button>
 			<button id="clear" class="btn">Clear</button>
-			<!-- <button id="drop" class="btn" onclick="board.drop()">Drop</button> -->
-			<button id="drop" class="btn" onclick="board.drop()">Drop</button>
 		</div>
 	</div>
 	<script src="js/boardInteraction.js"></script>

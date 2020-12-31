@@ -47,7 +47,10 @@ $(function(){
         stop: function(e, ui){
             $("#" + dragPath[dragPath.length-1]).fadeTo("fast", 1);
             board.updateAfterMove();
-            // drop();
+            if(dragPath.length > 1) {
+                board.drop()
+                console.log("Orbs were dragged");
+            }
             // console.log("Path taken: "+dragPath);    //full path of orb drag is saved here
         },
     });

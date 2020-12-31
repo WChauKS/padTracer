@@ -45,3 +45,75 @@
 	position: relative;
 	text-align: center;
 }
+
+/* Slider code for skyfall checkbox modified from 
+   https://stackoverflow.com/questions/39846282/how-to-add-the-text-on-and-off-to-toggle-button */
+.switch {
+	position: relative;
+	display: inline-block;
+	width: 88px;
+	height: 24px;
+}
+
+/* sets up the slider box */
+.slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: #ccc;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+/* sets up the slider itself */
+.slider:before {
+	position: absolute;
+	content: "";
+	height: 20px;
+	width: 20px;
+	left: 2px;
+	bottom: 2px;
+	background-image: url('img/red.png');
+	background-size: 100%;
+	-webkit-transition: .4s;
+	transition: .4s;
+}
+
+/* fills the slider box background when checked */
+input:checked + .slider {
+	background-color: #2196F3;
+}
+
+/* glow effect behind the slider box when in focus */
+input:focus + .slider {
+	box-shadow: 0 0 1px #2196F3;
+}
+
+/* when checked, the slider moves over 64 px */
+input:checked + .slider:before {
+	-webkit-transform: translateX(64px);
+	-ms-transform: translateX(64px);
+	transform: translateX(64px);
+}
+
+/* Rounded sliders */
+.slider.round {
+	border-radius: 34px;
+}
+
+.slider.round:before {
+	border-radius: 50%;
+}
+
+.skyfallText {
+  color: white;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top: 50%;
+  left: 50%;
+  font-size: 12px;
+  font-family: Verdana, sans-serif;
+}
