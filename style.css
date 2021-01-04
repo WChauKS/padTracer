@@ -117,3 +117,16 @@ input:checked + .slider:before {
   font-size: 12px;
   font-family: Verdana, sans-serif;
 }
+
+/* disable scrolling on mobile, taken from 
+   https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices */
+html {
+    overflow: hidden;
+}
+
+body {
+    overflow: hidden;
+    position: relative;
+    margin: 0;
+    padding: 0;
+}
