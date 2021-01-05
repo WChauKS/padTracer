@@ -45,11 +45,11 @@ $(function(){
             }
         },
         stop: function(e, ui){
-            $("#" + dragPath[dragPath.length-1]).fadeTo("fast", 1);
+            $("#" + dragPath[dragPath.length-1]).fadeTo(0, 1);
             board.updateAfterMove();
             if(dragPath.length > 1) {
-                board.drop()
                 console.log("Orbs were dragged");
+                board.drop()
             }
             // console.log("Path taken: "+dragPath);    //full path of orb drag is saved here
         },
@@ -74,7 +74,7 @@ $(function(){
     });
 });
 
-function fullDraggableDisable(toggle) {
+function lockOrbs(toggle) {
     var orbStr = "#orb";
     if(toggle == true) {
         for(var i = 0; i < board.numOrbs; i++) {
@@ -96,7 +96,7 @@ function fullDraggableDisable(toggle) {
 
 $("#inputSubmit")
     .on("click", function(){
-        fullDraggableDisable(false);
+        lockOrbs(false);
         inputSubmit();
     });
 
@@ -111,14 +111,14 @@ $("#clear")
 // appends on click function to fill input fields to correspond to what is in the board view
 $("#randomize")
     .on("click", function(){
-        fullDraggableDisable(false);
+        lockOrbs(false);
         board.randomize();
         var inputStr = "";
         for(i = 0; i < board.numOrbs; i++){
             inputStr += convertOrbToText(board.square[i].orb.getColor());
         }
         console.log("Board was randomized");
-        printBoardStr(inputStr);
+        // printBoardStr(inputStr);
         insertInputFields(inputStr);
         checkForSubmit();
     });
@@ -226,7 +226,7 @@ function inputSubmit(){
         board.changeOrb(i, tmp);
     }
     console.log("Input was accepted");
-    printBoardStr(input);
+    // printBoardStr(input);
 }
 
 // clears all of the input fields

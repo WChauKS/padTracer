@@ -120,7 +120,7 @@ input:checked + .slider:before {
 
 /* disable scrolling on mobile, taken from 
    https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices */
-html {
+/* html {
     overflow: hidden;
 }
 
@@ -129,4 +129,4 @@ body {
     position: relative;
     margin: 0;
     padding: 0;
-}
+} */

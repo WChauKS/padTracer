@@ -57,12 +57,16 @@ class Board {
         this.square[index].orb.setColor(newOrb);
     }
 
-    // randomly assigns new orb colors and calls changeOrb() to update the gui and internal colors
-    randomize() {
+    changeToRandomOrb(idx) {
         var randOrb;
+        randOrb = Math.floor(Math.random() * (Object.keys(ORBS).length - 1)) + 1;
+        this.changeOrb(idx, randOrb);
+    }
+
+    // iterates over every orb position and calls changeToRandomOrb to randomize the entire board
+    randomize() {
         for(var i = 0; i < this.numOrbs; i++){
-            randOrb = Math.floor(Math.random() * (Object.keys(ORBS).length - 1)) + 1;
-            this.changeOrb(i, randOrb);
+            this.changeToRandomOrb(i);
         }
     }
 
@@ -123,7 +127,7 @@ class Board {
                 }
                 else {
                     if(currentCombo.length >= min) {
-                        console.log("combo logged");
+                        // console.log("combo logged");
                         this.addComboToRemoveList(removeList, currentCombo);
                     }
                     comboColor = this.square[listOfOrbs[i]].orb.getColor();
@@ -171,7 +175,7 @@ class Board {
     // since it needs to wait for the fade to finish, promises needed to be used
     removeMatches(listOfMatches) {
         return new Promise(resolve => {
-            var fadeTime = 1000;
+            var fadeTime = 900;
             fadeRemoveOrbs(listOfMatches, fadeTime);
             setTimeout(() => {
                 for(var i = 0; i < listOfMatches.length; i++) {
@@ -223,36 +227,69 @@ class Board {
         }
     }
 
+    // calls dropColumn on each column so the any empty space with orbs above will be filled by those orbs
     dropBoard() {
-        for(var i = 0; i < this.column; i++) {
-            this.dropColumn(i);
-        }
+        return new Promise(resolve => {
+            for(var i = 0; i < this.column; i++) {
+                this.dropColumn(i);
+            }
+            resolve();
+        });
+    }
+
+    // places a random orb where there are empty spaces after the orbs on the board have dropped
+    skyfall() {
+        return new Promise(resolve => {
+            for(var i = 0; i < this.numOrbs; i++) {
+                if(this.square[i].orb.getColor() == 0) {
+                    this.changeToRandomOrb(i);
+                }
+            }
+            // printBoard();
+            resolve();
+        });
     }
 
     // calls removeMatches when there are matches on the board
     // if there are open spaces, the orbs above them will drop and fill the position
     async drop() {
+        var isSkyfallChecked = $("#skyfall").prop("checked");
         var orbsForRemoval = this.checkForMatch();
+
+        if(this.hasMatches == true) {
+            console.log("Orb matches found, dropping..."); 
+            lockOrbs(true); 
+        }// locks the orbs which prevens the user from making any more moves while the board is dropping
+
         while(this.hasMatches == true) {
             orbsForRemoval = this.checkForMatch();
             await this.removeMatches(orbsForRemoval);
-            this.dropBoard();
-            fullDraggableDisable(true);
+            await this.dropBoard();
+            if(isSkyfallChecked == true){
+                await this.skyfall();
+            }
+        }
+        // if skyfalls are allowed, then the user can continue to drag the orbs and play in free play
+        // otherwise, there will be empty spaces and the user will need to randomize or input new orbs in order to continue
+        if(isSkyfallChecked == true) {
+            console.log("Skyfall is enabled, new orbs created");
+            lockOrbs(false);
+        } else {
+            console.log("Skyfall is disabled, orbs locked");
         }
     }
 
     // after orbs are moved on the gui, it updates the internal board to reflect the changes
     updateAfterMove() {
         var tmp;
-        var boardStr = "";
+        // var boardStr = "";
         for(var i = 0; i < this.numOrbs; i++){
             tmp = "#orb" + i;
             this.square[i].orb.setColor(convertSrc($(tmp).attr("src")));
-            // console.log(this.square[i].orb);
-            boardStr += convertOrbToText(convertSrc($(tmp).attr("src")));
+            // boardStr += convertOrbToText(convertSrc($(tmp).attr("src")));
         }
-        if(boardStr != "000000000000000000000000000000"){
-            printBoardStr(boardStr);
-        }
+        // if(boardStr != "000000000000000000000000000000"){
+        //     printBoardStr(boardStr);
+        // }
     }
 }
