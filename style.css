@@ -46,8 +46,19 @@
 	text-align: center;
 }
 
+/* disables the user from highlighting elements on the page taken from
+	https://www.geeksforgeeks.org/how-to-disable-text-selection-highlighting-using-css/ */
+.disableHighlight {
+	-webkit-user-select:none; 
+	-webkit-touch-callout:none; 
+	-moz-user-select:none; 
+	-ms-user-select:none; 
+	user-select:none; 
+}
+
 /* Slider code for skyfall checkbox modified from 
-   https://stackoverflow.com/questions/39846282/how-to-add-the-text-on-and-off-to-toggle-button */
+   https://stackoverflow.com/questions/39846282/how-to-add-the-text-on-and-off-to-toggle-button 
+   starts from here to the end of the document */
 .switch {
 	position: relative;
 	display: inline-block;
