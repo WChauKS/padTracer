@@ -1,0 +1,62 @@
+#input {
+	width: 600px;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+}
+
+.inputField {
+	width: 60px;
+	margin: 1%;
+	text-align: center;
+}
+
+/* TODO: add 7x6 board */
+#board {
+	/* removes gap between rows */
+	font-size: 0;		
+	height:500px;
+	clear:both;
+	width:600px;
+	margin: 0 auto;
+	position:relative;
+}
+
+.imgWrapper {
+	position: relative;
+	display: inline-block;
+}
+
+/* overlays orbs onto board */
+.orbs {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+#controls{
+	padding-top: 20px;
+	text-align: center;
+}
+
+#test {
+    width: 600px;
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+}
+
+.btn {
+	cursor: pointer;
+	border-radius: 3px;
+}
+
+/* disables the user from highlighting elements on the page taken from
+	https://www.geeksforgeeks.org/how-to-disable-text-selection-highlighting-using-css/ */
+.disableHighlight {
+	-webkit-user-select:none; 
+	-webkit-touch-callout:none; 
+	-moz-user-select:none; 
+	-ms-user-select:none; 
+	user-select:none; 
+}

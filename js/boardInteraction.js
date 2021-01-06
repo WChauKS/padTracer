@@ -32,6 +32,7 @@ $(function(){
         // grid: [100, 100],    // causes helper clone to snap
         helper: "clone",
         start: function(e, ui){
+            ui.helper.css('width', "105%").css('height', "105%");
             dragPath = [];
             origin = e.target.id;
             dragPath.push(origin);

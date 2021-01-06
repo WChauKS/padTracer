@@ -1,0 +1,70 @@
+/* code for the info popup modified from
+    https://www.youtube.com/watch?v=iE_6pQ3RlZU 
+    starts from here to the end of the document */
+/* adds a grey background behind the popup */
+.popup .overlay {
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    z-index: 90;
+    display: none;
+}
+
+/* sets up position of the popup box and the font of its contents */
+.popup .infoBox {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0);
+    background: #fff;
+    width: 42%;
+    height: 45%;
+    z-index: 100;
+    text-align: left;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 10px;
+    font-family: Verdana, sans-serif;
+}
+
+/* for the info inside of the info box without the header
+    inherits fonts from props from infoBox */
+.popup .infoContent {
+    position: absolute;
+    top: 25%;
+    left: 2%;
+    bottom: 2%;
+    padding-right: 2%;
+    text-align: justify;
+    box-sizing: border-box;
+    overflow: auto;
+}
+
+/* sets up the button for closing the popup */
+.popup .closeBtn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 30px;
+    height: 30px;
+    background: #222;
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.popup.active .overlay {
+    display: block;
+}
+
+.popup.active .infoBox {
+    transition: all 300ms ease-in-out;
+    transform: translate(-50%,-50%) scale(1);
+}

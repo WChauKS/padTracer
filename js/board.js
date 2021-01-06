@@ -259,6 +259,7 @@ class Board {
         if(this.hasMatches == true) {
             console.log("Orb matches found, dropping..."); 
             lockOrbs(true); 
+            lockButtons(true);      // lock buttons while dropping
         }// locks the orbs which prevens the user from making any more moves while the board is dropping
 
         while(this.hasMatches == true) {
@@ -277,6 +278,7 @@ class Board {
         } else {
             console.log("Skyfall is disabled, orbs locked");
         }
+        lockButtons(false);     // unlock buttons
     }
 
     // after orbs are moved on the gui, it updates the internal board to reflect the changes

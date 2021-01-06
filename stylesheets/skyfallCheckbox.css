@@ -1,65 +1,8 @@
-#input {
-	width: 600px;
-	margin: 0 auto;
-	position: relative;
-	text-align: center;
-}
-
-.inputField {
-	width: 60px;
-	margin: 1%;
-	text-align: center;
-}
-
-/* TODO: add 7x6 board */
-#board {
-	/* removes gap between rows */
-	font-size: 0;		
-	height:500px;
-	clear:both;
-	width:600px;
-	margin: 0 auto;
-	position:relative;
-}
-
-.imgWrapper {
-	position: relative;
-	display: inline-block;
-}
-
-/* overlays orbs onto board */
-.orbs {
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-#controls{
-	padding-top: 20px;
-	text-align: center;
-}
-
-#test {
-    width: 600px;
-	margin: 0 auto;
-	position: relative;
-	text-align: center;
-}
-
-/* disables the user from highlighting elements on the page taken from
-	https://www.geeksforgeeks.org/how-to-disable-text-selection-highlighting-using-css/ */
-.disableHighlight {
-	-webkit-user-select:none; 
-	-webkit-touch-callout:none; 
-	-moz-user-select:none; 
-	-ms-user-select:none; 
-	user-select:none; 
-}
-
 /* Slider code for skyfall checkbox modified from 
    https://stackoverflow.com/questions/39846282/how-to-add-the-text-on-and-off-to-toggle-button 
    starts from here to the end of the document */
 .switch {
+	cursor: pointer;
 	position: relative;
 	display: inline-block;
 	width: 88px;
@@ -69,7 +12,6 @@
 /* sets up the slider box */
 .slider {
 	position: absolute;
-	cursor: pointer;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -87,7 +29,7 @@
 	width: 20px;
 	left: 2px;
 	bottom: 2px;
-	background-image: url('img/red.png');
+	background-image: url('../img/red.png');
 	background-size: 100%;
 	-webkit-transition: .4s;
 	transition: .4s;
@@ -112,7 +54,7 @@ input:checked + .slider:before {
 
 /* Rounded sliders */
 .slider.round {
-	border-radius: 34px;
+	border-radius: 14px;
 }
 
 .slider.round:before {
@@ -120,7 +62,7 @@ input:checked + .slider:before {
 }
 
 .skyfallText {
-  color: white;
+  color: #222;
   position: absolute;
   transform: translate(-50%,-50%);
   top: 50%;
@@ -128,16 +70,3 @@ input:checked + .slider:before {
   font-size: 12px;
   font-family: Verdana, sans-serif;
 }
-
-/* disable scrolling on mobile, taken from 
-   https://stackoverflow.com/questions/10592411/disable-scrolling-in-all-mobile-devices */
-/* html {
-    overflow: hidden;
-}
-
-body {
-    overflow: hidden;
-    position: relative;
-    margin: 0;
-    padding: 0;
-} */

@@ -58,3 +58,7 @@ function fadeRemoveOrbs(listOfOrbs, fadeTime) {
         }
     }
 }
+
+function lockButtons(bool) {
+    $(".btn").prop("disabled", bool)
+}
