@@ -16,7 +16,7 @@
 /* sets up position of the popup box and the font of its contents */
 .popup .infoBox {
     position: absolute;
-    top: 50%;
+    top: 290px;
     left: 50%;
     transform: translate(-50%,-50%) scale(0);
     background: #fff;
@@ -34,9 +34,9 @@
     inherits fonts from props from infoBox */
 .popup .infoContent {
     position: absolute;
-    top: 25%;
+    top: 75px;
     left: 2%;
-    bottom: 2%;
+    bottom: 20px;
     padding-right: 2%;
     text-align: justify;
     box-sizing: border-box;
