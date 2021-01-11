@@ -255,6 +255,7 @@ class Board {
     async drop() {
         var isSkyfallChecked = $("#skyfall").prop("checked");
         var orbsForRemoval = this.checkForMatch();
+        console.log(orbsForRemoval);
 
         if(this.hasMatches == true) {
             console.log("Orb matches found, dropping..."); 

@@ -3,7 +3,7 @@ var BASIC_ABOUT = "<p>Combos are made by connecting 3 or more orbs horizontally 
 var INPUT_INSTR = "<p>The 5 fields above the board represent each row. You can enter each orb individually or you can right click on the first field and paste in a string of 30 colors. It will automatically break the string up and populate the correct fields. For example: </p><p style=\"text-align: center\">HHHHHHHHHHHHHHRBHHHRBRBHRBBBRR</p>";
 var SKYFALL_DES = "<p><span style=\"color: #2196F3\">Skyfall toggle</span> enables/disables the board from creating new orbs after orb matches and drops. This gives a small chance for more combos to be made.</p>";
 var RANDOM_DES = "<p><span style=\"color: #2196F3\">Randomize</span> will change the entire board to random orbs. The input fields will also be updated to reflect the changes.</p>";
-var CLEAR_DES = "<p><span style=\"color: #2196F3\">Clear</span> will clear the entire board. The input fields will also be cleared.</p>";
+var CLEAR_DES = "<p><span style=\"color: #2196F3\">Clear</span> will clear the entire board and the input fields.</p>";
 
 // opens popup by pressing button
 $("#infoBtn")

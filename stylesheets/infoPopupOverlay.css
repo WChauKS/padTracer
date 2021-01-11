@@ -16,15 +16,16 @@
 /* sets up position of the popup box and the font of its contents */
 .popup .infoBox {
     position: absolute;
-    top: 290px;
+    top: 31%;
     left: 50%;
     transform: translate(-50%,-50%) scale(0);
     background: #fff;
-    width: 42%;
-    height: 45%;
+    width: 60vmin;
+    height: 50%;
     z-index: 100;
     text-align: left;
-    padding: 20px;
+    padding-left: 20px;
+    padding-bottom: 20px;
     box-sizing: border-box;
     border-radius: 10px;
     font-family: Verdana, sans-serif;
