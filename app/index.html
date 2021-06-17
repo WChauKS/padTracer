@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>padSolver</title>
+	<title>padTracer</title>
 	<meta charset="utf-8">
 	<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
 	<link rel="stylesheet" type="text/css" href="stylesheets/skyfallCheckbox.css">
@@ -32,6 +32,7 @@
 		</div>
 		<div id="board"></div>
 		<div id="controls">
+			<!-- <button id="connectBtn" class="btn">Connect</button> -->
 			<button id="infoBtn" class="btn">Info</button>
 			<label class="switch">
 				<input id="skyfall" type="checkbox" unchecked>
@@ -40,6 +41,7 @@
 			</label>
 			<button id="randomize" class="btn">Randomize</button>
 			<button id="clear" class="btn">Clear</button>
+			<button id="submitPath" class="btn">Submit Path</button>
 		</div>
 	</div>
 	<div id="infoPopup" class="popup" >
@@ -52,6 +54,7 @@
 	</div>
 	<script src="js/infoPopup.js"></script>
 	<script src="js/boardInteraction.js"></script>
+	<script src="js/serverInteraction.js"></script>
 	<div id="bottomBanner" class="disableHighlight banner">
 		<div class="bannerContent">
 			<div class="bannerText">Wesley Chau</div>
