@@ -14,6 +14,7 @@ const { RSA_X931_PADDING } = require('constants');
 
 app.set('port', process.argv[2] || 3000);
 app.use(express.static(path.join(__dirname, '../app')));
+app.use(require('./js/routes.js'));
 
 const SerialPort = require('serialport');
 const port = new SerialPort('COM3', {
@@ -58,29 +59,6 @@ function sendGCode(gcode) {
         console.log(gCodeQueue);
     })
 }
-
-// Home page
-app.get('/', function (req, res) {
-  res.sendFile('index.html');
-});
-
-app.post('/path', function(req, res) {
-    var dragPath = processOrbs(req.body.dragPath);
-    console.log(dragPath);
-});
-
-// Other Error
-app.use(function(req, res) {
-    res.status(404);
-    res.end('<h1>Error: 400</h1>')
-  });
-  
-// Server Side Error
-app.use(function(err, req, res, next) {
-    console.error(err.stack);
-    res.status(500);
-    res.end('<h1>Error: 500</h1>')
-});
 
 // prints server start message to server console
 app.listen(app.get('port'), function() {
