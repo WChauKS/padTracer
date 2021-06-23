@@ -1,14 +1,23 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const pathModule = require('./processOrbs.js');
+const serial = require('./serialComm.js')
+const device = new serial('COM3', 115200)
 
 // Home page
 router.get('/', function (req, res) {
     res.sendFile('index.html');
 });
 
+// router.post('/path', function(req, res) {
+//     var dragPath = processOrbs(req.body.dragPath);
+//     // console.log(dragPath);
+// });
+
 router.post('/path', function(req, res) {
-    var dragPath = processOrbs(req.body.dragPath);
-    console.log(dragPath);
+    var path = pathModule.processOrbs(req.body.dragPath);
+    // console.log(path);
+    device.trace(path);
 });
 
 // Other Error
