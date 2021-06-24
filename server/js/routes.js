@@ -2,17 +2,27 @@ const express = require('express');
 const router = express.Router();
 const pathModule = require('./processOrbs.js');
 const serial = require('./serialComm.js')
-const device = new serial('COM3', 115200)
+// const device = new serial('COM3', 115200)
 
 // Home page
 router.get('/', function (req, res) {
     res.sendFile('index.html');
 });
 
-// router.post('/path', function(req, res) {
-//     var dragPath = processOrbs(req.body.dragPath);
-//     // console.log(dragPath);
-// });
+router.post('/connect', function(req, res) {
+    // opens serial connection
+    // need to add sockets to read available comm ports and baudrate for selecting on browser
+    if(req.body.connect == 'connect') {
+        device = new serial('COM3', 115200);
+    }
+    else if(req.body.connect == 'disconnect') {
+        device.disconnect();
+    }
+    else {
+        // add error handling
+        console.log('Error: an error occurred when connecting/disconnecting from serial device');
+    }
+})
 
 router.post('/path', function(req, res) {
     var path = pathModule.processOrbs(req.body.dragPath);
