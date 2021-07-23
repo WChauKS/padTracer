@@ -5,9 +5,6 @@ module.exports.processOrbs = function(path) {
     return path;
 }
 
-/** if I am using absolute positioning, I probably will remove the code below
- * and instead just map the positions to Orb# **/
-
 // receives a string with the format Orb##, removes 'Orb' and returns the resulting number
 function removeOrbString(orbNum) {
     const removeNumChar = 3;

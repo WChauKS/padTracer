@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const pathModule = require('./processOrbs.js');
 const serial = require('./serialComm.js')
-// const device = new serial('COM3', 115200)
+const device = new serial('COM3', 115200)
 
 // Home page
 router.get('/', function (req, res) {
@@ -26,7 +26,6 @@ router.post('/connect', function(req, res) {
 
 router.post('/path', function(req, res) {
     var path = pathModule.processOrbs(req.body.dragPath);
-    // console.log(path);
     device.trace(path);
 });
 
